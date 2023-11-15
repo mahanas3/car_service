@@ -11,11 +11,18 @@ class ScreenProvider extends ChangeNotifier {
   void signUp(BuildContext context, String email, String password, String name,
       String phoneno) async {
     try {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        },
+      );
       singupdetails =
           await Api().createSignUpPage(email, password, name, phoneno);
-      const CircularProgressIndicator(
-        color: Colors.black87,
-      );
       Navigator.pushNamed(context, '/home');
       notifyListeners();
     } catch (e) {
@@ -26,11 +33,24 @@ class ScreenProvider extends ChangeNotifier {
   }
 
   void login(BuildContext context, String email, String password) async {
-    try{
-    logindetails = await Api().createLoginPage(email, password);
-    Navigator.pushNamed(context, '/home');
-    notifyListeners();
-  }catch(e){
-      print(e);
-    }}
+    try {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        },
+      );
+      logindetails = await Api().createLoginPage(email, password);
+      Navigator.pushNamed(context, '/home');
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }
