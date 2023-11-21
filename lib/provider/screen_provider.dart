@@ -11,6 +11,11 @@ class ScreenProvider extends ChangeNotifier {
   void signUp(BuildContext context, String email, String password, String name,
       String phoneno) async {
     try {
+      singupdetails =
+          await Api().createSignUpPage(email, password, name, phoneno);
+      Navigator.pushNamed(context, '/home');
+      notifyListeners();
+    } catch (e) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -21,11 +26,6 @@ class ScreenProvider extends ChangeNotifier {
           );
         },
       );
-      singupdetails =
-          await Api().createSignUpPage(email, password, name, phoneno);
-      Navigator.pushNamed(context, '/home');
-      notifyListeners();
-    } catch (e) {
       if (kDebugMode) {
         print(e);
       }

@@ -8,7 +8,7 @@ class Api {
       String UserName, String Password, String Name, String PhoneNo) async {
     final http.Response response = await http.post(
         Uri.parse(
-          'https://d1dd-117-196-29-183.ngrok.io/api/regsiter',
+          'https://d1dd-117-196-29-183.ngrok.io/api/regsiter'
         ),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -20,10 +20,14 @@ class Api {
           'PhoneNo': PhoneNo.trim(),
           'Role': '2'
         });
-    if (response.statusCode == 201) {
+    //print(response);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      print(response.statusCode);
       return Details.fromJson(json.decode(response.body));
     } else {
-      throw Exception(' Registration failed!');
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Registration failed!');
     }
   }
 
